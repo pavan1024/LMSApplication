@@ -14,7 +14,6 @@ import lombok.Setter;
 @Entity(name = "Library")
 @Getter
 @Setter
-@Component
 public class Library {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
