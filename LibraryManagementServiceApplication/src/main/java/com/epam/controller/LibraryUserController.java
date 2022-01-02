@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -44,6 +45,13 @@ public class LibraryUserController {
 	public ResponseEntity<String> deleteBook(@PathVariable String username) {
 		String url = usersUrl.concat("/" + username);
 		return template.exchange(url, HttpMethod.DELETE, null, String.class);
+	}
+	
+	@PutMapping("/{username}")
+	public ResponseEntity<String> updateBook(@PathVariable String username,@RequestBody UserDto userDto) {
+		String url = usersUrl.concat("/" + username);
+		HttpEntity<UserDto> user = new HttpEntity<>(userDto);
+		return template.exchange(url, HttpMethod.PUT, user, String.class);
 	}
 
 }

@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import org.junit.jupiter.api.Test;
@@ -66,6 +67,16 @@ class LibraryBookControllerTest {
 		String response = result.getResponse().getContentAsString();
 		assertEquals("", response);
 
+	}
+	
+	@Test
+	void UpdateBookTest() throws Exception {
+		BookDto bookDto = new BookDto();
+		HttpEntity<BookDto> book = new HttpEntity<>(bookDto);
+		MvcResult result = mockMvc.perform(put("/library/books/1").contentType(MediaType.APPLICATION_JSON)
+				.content(mapper.writeValueAsString(book)).accept(MediaType.APPLICATION_JSON)).andExpect(status().isOk()).andReturn();
+		String response = result.getResponse().getContentAsString();
+		assertEquals("", response);
 	}
 
 }
