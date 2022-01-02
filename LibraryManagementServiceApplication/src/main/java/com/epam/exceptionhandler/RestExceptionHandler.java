@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import com.epam.exception.DetailsAlreadyExistsException;
 import com.epam.exception.DetailsNotFoundException;
 
-
 @RestControllerAdvice
 public class RestExceptionHandler {
 	String libraryService = "libraryService";
@@ -19,7 +18,7 @@ public class RestExceptionHandler {
 	String timestamp = "timestamp";
 	String error = "error";
 	String status = "status";
-	
+
 	@ExceptionHandler(value = DetailsAlreadyExistsException.class)
 	public Map<String, String> handleDetailsAlreadyExistsException(DetailsAlreadyExistsException ex) {
 		Map<String, String> response = new HashMap<>();
@@ -29,7 +28,7 @@ public class RestExceptionHandler {
 		response.put(status, HttpStatus.NOT_FOUND.name());
 		return response;
 	}
-	
+
 	@ExceptionHandler(value = DetailsNotFoundException.class)
 	public Map<String, String> handleDetailsNotFoundException(DetailsNotFoundException ex) {
 		Map<String, String> response = new HashMap<>();
@@ -39,5 +38,5 @@ public class RestExceptionHandler {
 		response.put(status, HttpStatus.NOT_FOUND.name());
 		return response;
 	}
-	
+
 }

@@ -17,12 +17,12 @@ import lombok.Setter;
 public class Library {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "LIBRARY_ID",updatable=false,nullable=false)
+	@Column(name = "LIBRARY_ID", updatable = false, nullable = false)
 	int id;
-	
-	@Column(name = "USERNAME",unique=true)
+
+	@Column(name = "USERNAME", unique = true)
 	String username;
-	
-	@Column(name = "BOOK_ID",unique=true)
+
+	@Column(name = "BOOK_ID", unique = true)
 	int bookId;
 }

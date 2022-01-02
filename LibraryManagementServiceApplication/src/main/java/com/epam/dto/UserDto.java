@@ -6,7 +6,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class UserDto {
-	
+
 	String username;
 	String email;
 }

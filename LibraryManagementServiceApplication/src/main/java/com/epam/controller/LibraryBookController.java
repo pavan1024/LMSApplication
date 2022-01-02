@@ -16,36 +16,34 @@ import org.springframework.web.client.RestTemplate;
 import com.epam.dto.BookDto;
 
 @RestController
-@RequestMapping("/library/books") 
-public class LibraryBookController { 
+@RequestMapping("/library/books")
+public class LibraryBookController {
 	@Autowired
 	RestTemplate template;
-	
+
 	String booksUrl = "http://localhost:9001/books";
-	
+
 	@GetMapping
 	public ResponseEntity<String> getAllBooks() {
 		return template.exchange(booksUrl, HttpMethod.GET, null, String.class);
 	}
-	
+
 	@GetMapping("/{id}")
-	public ResponseEntity<String> getBook(@PathVariable int id){
-		String url = booksUrl.concat("/"+id);
-		return template.exchange(url, HttpMethod.GET,null,String.class);
-	}
-	
-	@PostMapping
-	public ResponseEntity<String> addBook(@RequestBody BookDto bookDto){
-		HttpEntity<BookDto> book = new HttpEntity<>(bookDto);
-		return template.exchange(booksUrl, HttpMethod.POST,book,String.class);
-	}
-	
-	@DeleteMapping("/{id}")
-	public ResponseEntity<String> deleteBook(@PathVariable int id){
-		String url = booksUrl.concat("/"+id);
-		return template.exchange(url,HttpMethod.DELETE,null,String.class);
+	public ResponseEntity<String> getBook(@PathVariable int id) {
+		String url = booksUrl.concat("/" + id);
+		return template.exchange(url, HttpMethod.GET, null, String.class);
 	}
 
-	
-	
+	@PostMapping
+	public ResponseEntity<String> addBook(@RequestBody BookDto bookDto) {
+		HttpEntity<BookDto> book = new HttpEntity<>(bookDto);
+		return template.exchange(booksUrl, HttpMethod.POST, book, String.class);
+	}
+
+	@DeleteMapping("/{id}")
+	public ResponseEntity<String> deleteBook(@PathVariable int id) {
+		String url = booksUrl.concat("/" + id);
+		return template.exchange(url, HttpMethod.DELETE, null, String.class);
+	}
+
 }

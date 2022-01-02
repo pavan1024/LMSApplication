@@ -14,35 +14,36 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
 import com.epam.dto.UserDto;
+
 @RestController
-@RequestMapping("/library/users") 
+@RequestMapping("/library/users")
 public class LibraryUserController {
 	@Autowired
 	RestTemplate template;
-	
+
 	String usersUrl = "http://localhost:9002/users";
-	
+
 	@GetMapping
 	public ResponseEntity<String> getAllUsers() {
 		return template.exchange(usersUrl, HttpMethod.GET, null, String.class);
 	}
-	
+
 	@GetMapping("/{username}")
-	public ResponseEntity<String> getUser(@PathVariable String username){
-		String url = usersUrl.concat("/"+username);
-		return template.exchange(url, HttpMethod.GET,null,String.class);
+	public ResponseEntity<String> getUser(@PathVariable String username) {
+		String url = usersUrl.concat("/" + username);
+		return template.exchange(url, HttpMethod.GET, null, String.class);
 	}
-	
+
 	@PostMapping
-	public ResponseEntity<String> addBook(@RequestBody UserDto userDto){
+	public ResponseEntity<String> addBook(@RequestBody UserDto userDto) {
 		HttpEntity<UserDto> user = new HttpEntity<>(userDto);
-		return template.exchange(usersUrl, HttpMethod.POST,user,String.class);
+		return template.exchange(usersUrl, HttpMethod.POST, user, String.class);
 	}
-	
+
 	@DeleteMapping("/{username}")
-	public ResponseEntity<String> deleteBook(@PathVariable String username){
-		String url = usersUrl.concat("/"+username);
-		return template.exchange(url,HttpMethod.DELETE,null,String.class);
+	public ResponseEntity<String> deleteBook(@PathVariable String username) {
+		String url = usersUrl.concat("/" + username);
+		return template.exchange(url, HttpMethod.DELETE, null, String.class);
 	}
-	
+
 }

@@ -26,52 +26,58 @@ class LibraryServiceTest {
 
 	@Mock
 	LibraryRepository libraryRepository;
-	
+
 	@InjectMocks
 	LibraryService libraryService;
-	
+
 	@Mock
 	ModelMapper mapper;
-	
+
 	@Autowired
 	LibraryDto libraryDto;
-	
-	Library library = new Library();
-	
+
+	Library library;
+
 	@BeforeEach
 	void setUp() {
+		library = new Library();
 		libraryDto.setUsername("username");
 		libraryDto.setBookId(12);
 	}
-	
+
 	@Test
 	void addTest() {
 		when(mapper.map(libraryDto, Library.class)).thenReturn(library);
 		Optional<Library> optionalLibrary = Optional.empty();
 		when(libraryRepository.findByUsername(libraryDto.getUsername())).thenReturn(optionalLibrary);
-		assertTrue(libraryService.add(libraryDto));
+		assertTrue(libraryService.addLibraryDetails(libraryDto));
 	}
+
 	@Test
 	void addErrorTest() {
 		Optional<Library> optionalBook = Optional.ofNullable(library);
 		when(libraryRepository.findByUsername(libraryDto.getUsername())).thenReturn(optionalBook);
-		Throwable exception = assertThrows(DetailsAlreadyExistsException.class, () -> libraryService.add(libraryDto));
+		Throwable exception = assertThrows(DetailsAlreadyExistsException.class,
+				() -> libraryService.addLibraryDetails(libraryDto));
 		assertEquals("Already Exists", exception.getMessage());
 	}
-	
+
 	@Test
 	void deleteTest() {
 		Optional<Library> optionalLibrary = Optional.ofNullable(library);
-		when(libraryRepository.findByUsernameAndBookId(libraryDto.getUsername(),libraryDto.getBookId())).thenReturn(optionalLibrary);
-		assertTrue(libraryService.delete(libraryDto.getUsername(),libraryDto.getBookId()));
+		when(libraryRepository.findByUsernameAndBookId(libraryDto.getUsername(), libraryDto.getBookId()))
+				.thenReturn(optionalLibrary);
+		assertTrue(libraryService.deleteLibraryDetails(libraryDto.getUsername(), libraryDto.getBookId()));
 	}
+
 	@Test
 	void deleteErrorTest() {
 		Optional<Library> optionalBook = Optional.empty();
-		when(libraryRepository.findByUsernameAndBookId(libraryDto.getUsername(),libraryDto.getBookId())).thenReturn(optionalBook);
-		Throwable exception = assertThrows(DetailsNotFoundException.class, () -> libraryService.delete(libraryDto.getUsername(),libraryDto.getBookId()));
+		when(libraryRepository.findByUsernameAndBookId(libraryDto.getUsername(), libraryDto.getBookId()))
+				.thenReturn(optionalBook);
+		Throwable exception = assertThrows(DetailsNotFoundException.class,
+				() -> libraryService.deleteLibraryDetails(libraryDto.getUsername(), libraryDto.getBookId()));
 		assertEquals("Details Not Found", exception.getMessage());
 	}
-	
-	
+
 }

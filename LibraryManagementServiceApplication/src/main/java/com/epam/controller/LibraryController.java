@@ -17,20 +17,21 @@ import com.epam.service.LibraryService;
 @RestController
 @RequestMapping("/library")
 public class LibraryController {
-	
+
 	@Autowired
 	LibraryService libraryService;
-	
+
 	@Autowired
 	LibraryDto libraryDto;
-	
+
 	@PostMapping("/users/{username}/books/{bookId}")
-	public ResponseEntity<String> add(@PathVariable String username,@PathVariable int bookId) throws DetailsAlreadyExistsException{
+	public ResponseEntity<String> addLibraryDetails(@PathVariable String username, @PathVariable int bookId)
+			throws DetailsAlreadyExistsException {
 		String status = "";
 		HttpStatus statusCode = null;
 		libraryDto.setUsername(username);
 		libraryDto.setBookId(bookId);
-		if (libraryService.add(libraryDto)) {
+		if (libraryService.addLibraryDetails(libraryDto)) {
 			status = "Library Details Added Successfully";
 			statusCode = HttpStatus.ACCEPTED;
 		} else {
@@ -39,12 +40,13 @@ public class LibraryController {
 		}
 		return new ResponseEntity<>(status, statusCode);
 	}
-	
+
 	@DeleteMapping("/users/{username}/books/{bookId}")
-	public ResponseEntity<String> delete(@PathVariable String username,@PathVariable int bookId) throws DetailsNotFoundException{
+	public ResponseEntity<String> deleteLibraryDetails(@PathVariable String username, @PathVariable int bookId)
+			throws DetailsNotFoundException {
 		String status = "";
 		HttpStatus statusCode = null;
-		if (libraryService.delete(username,bookId)) {
+		if (libraryService.deleteLibraryDetails(username, bookId)) {
 			status = "Library Details Deleted Successfully";
 			statusCode = HttpStatus.ACCEPTED;
 		} else {

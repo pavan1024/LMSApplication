@@ -12,12 +12,12 @@ public class LibraryServiceApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(LibraryServiceApplication.class, args);
 	}
-	
+
 	@Bean
 	public RestTemplate restTemplate() {
-	    return new RestTemplate();
+		return new RestTemplate();
 	}
-	
+
 	@Bean
 	public ModelMapper getMapper() {
 		return new ModelMapper();
