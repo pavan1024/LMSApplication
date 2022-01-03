@@ -47,19 +47,21 @@ class LibraryServiceTest {
 
 	@Test
 	void addTest() {
-		when(mapper.map(libraryDto, Library.class)).thenReturn(library);
 		Optional<Library> optionalLibrary = Optional.empty();
-		when(libraryRepository.findByUsername(libraryDto.getUsername())).thenReturn(optionalLibrary);
-		assertTrue(libraryService.addLibraryDetails(libraryDto));
+		when(mapper.map(libraryDto, Library.class)).thenReturn(library);
+		when(libraryRepository.findByBookId(libraryDto.getBookId())).thenReturn(optionalLibrary);
+		assertEquals(null, libraryService.addLibraryDetails(libraryDto));
+
 	}
 
 	@Test
 	void addErrorTest() {
 		Optional<Library> optionalBook = Optional.ofNullable(library);
-		when(libraryRepository.findByUsername(libraryDto.getUsername())).thenReturn(optionalBook);
+		when(libraryRepository.findByBookId(libraryDto.getBookId())).thenReturn(optionalBook);
 		Throwable exception = assertThrows(DetailsAlreadyExistsException.class,
 				() -> libraryService.addLibraryDetails(libraryDto));
 		assertEquals("Already Exists", exception.getMessage());
+
 	}
 
 	@Test
@@ -67,7 +69,8 @@ class LibraryServiceTest {
 		Optional<Library> optionalLibrary = Optional.ofNullable(library);
 		when(libraryRepository.findByUsernameAndBookId(libraryDto.getUsername(), libraryDto.getBookId()))
 				.thenReturn(optionalLibrary);
-		assertTrue(libraryService.deleteLibraryDetails(libraryDto.getUsername(), libraryDto.getBookId()));
+		assertEquals("Deleted Library Details",
+				libraryService.deleteLibraryDetails(libraryDto.getUsername(), libraryDto.getBookId()));
 	}
 
 	@Test

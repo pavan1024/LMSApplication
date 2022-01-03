@@ -25,34 +25,16 @@ public class LibraryController {
 	LibraryDto libraryDto;
 
 	@PostMapping("/users/{username}/books/{bookId}")
-	public ResponseEntity<String> addLibraryDetails(@PathVariable String username, @PathVariable int bookId)
+	public ResponseEntity<LibraryDto> addLibraryDetails(@PathVariable String username, @PathVariable int bookId)
 			throws DetailsAlreadyExistsException {
-		String status = "";
-		HttpStatus statusCode = null;
 		libraryDto.setUsername(username);
 		libraryDto.setBookId(bookId);
-		if (libraryService.addLibraryDetails(libraryDto)) {
-			status = "Library Details Added Successfully";
-			statusCode = HttpStatus.ACCEPTED;
-		} else {
-			status = "Library Addition Unsuccessful";
-			statusCode = HttpStatus.NOT_FOUND;
-		}
-		return new ResponseEntity<>(status, statusCode);
+		return new ResponseEntity<>(libraryService.addLibraryDetails(libraryDto), HttpStatus.CREATED);
 	}
 
 	@DeleteMapping("/users/{username}/books/{bookId}")
 	public ResponseEntity<String> deleteLibraryDetails(@PathVariable String username, @PathVariable int bookId)
 			throws DetailsNotFoundException {
-		String status = "";
-		HttpStatus statusCode = null;
-		if (libraryService.deleteLibraryDetails(username, bookId)) {
-			status = "Library Details Deleted Successfully";
-			statusCode = HttpStatus.ACCEPTED;
-		} else {
-			status = "Library Deletion Unsuccessful";
-			statusCode = HttpStatus.NOT_FOUND;
-		}
-		return new ResponseEntity<>(status, statusCode);
+		return new ResponseEntity<>(libraryService.deleteLibraryDetails(username, bookId), HttpStatus.NO_CONTENT);
 	}
 }

@@ -18,9 +18,9 @@ public class Library {
 	@Column(name = "LIBRARY_ID", updatable = false, nullable = false)
 	int id;
 
-	@Column(name = "USERNAME", unique = true)
+	@Column(name = "USERNAME")
 	String username;
 
-	@Column(name = "BOOK_ID", unique = true)
+	@Column(name = "BOOK_ID")
 	int bookId;
 }

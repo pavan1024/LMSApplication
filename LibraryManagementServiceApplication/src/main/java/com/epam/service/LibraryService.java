@@ -21,26 +21,25 @@ public class LibraryService {
 	@Autowired
 	ModelMapper mapper;
 
-	public boolean addLibraryDetails(LibraryDto libraryDto) throws DetailsAlreadyExistsException {
-		boolean status = false;
-		Optional<Library> username = libraryRepository.findByUsername(libraryDto.getUsername());
-		Optional<Library> bookId = libraryRepository.findByBookId(libraryDto.getBookId());
-		Library library = mapper.map(libraryDto, Library.class);
-		if (username.isPresent() || bookId.isPresent()) {
+	public LibraryDto addLibraryDetails(LibraryDto libraryDto) throws DetailsAlreadyExistsException {
+		LibraryDto libraryDto1;
+		Optional<Library> library2 = libraryRepository.findByBookId(libraryDto.getBookId());
+		Library library = mapper.map(libraryDto, Library.class);		
+		if (library2.isPresent()) {
 			throw new DetailsAlreadyExistsException("Already Exists");
 		} else {
 			libraryRepository.save(library);
-			status = true;
+			libraryDto1 = mapper.map(library, LibraryDto.class);
 		}
-		return status;
+		return libraryDto1;
 	}
 
-	public boolean deleteLibraryDetails(String username, int bookId) throws DetailsNotFoundException {
-		boolean status = false;
+	public String deleteLibraryDetails(String username, int bookId) throws DetailsNotFoundException {
+		String status = "";
 		Optional<Library> user = libraryRepository.findByUsernameAndBookId(username, bookId);
 		if (user.isPresent()) {
 			libraryRepository.delete(user.get());
-			status = true;
+			status = "Deleted Library Details";
 		} else {
 			throw new DetailsNotFoundException("Details Not Found");
 		}
