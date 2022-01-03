@@ -24,7 +24,7 @@ public class LibraryService {
 	public LibraryDto addLibraryDetails(LibraryDto libraryDto) throws DetailsAlreadyExistsException {
 		LibraryDto libraryDto1;
 		Optional<Library> library2 = libraryRepository.findByBookId(libraryDto.getBookId());
-		Library library = mapper.map(libraryDto, Library.class);		
+		Library library = mapper.map(libraryDto, Library.class);
 		if (library2.isPresent()) {
 			throw new DetailsAlreadyExistsException("Already Exists");
 		} else {
