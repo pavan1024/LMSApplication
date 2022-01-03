@@ -68,13 +68,15 @@ class LibraryBookControllerTest {
 		assertEquals("", response);
 
 	}
-	
+
 	@Test
 	void UpdateBookTest() throws Exception {
 		BookDto bookDto = new BookDto();
 		HttpEntity<BookDto> book = new HttpEntity<>(bookDto);
-		MvcResult result = mockMvc.perform(put("/library/books/1").contentType(MediaType.APPLICATION_JSON)
-				.content(mapper.writeValueAsString(book)).accept(MediaType.APPLICATION_JSON)).andExpect(status().isOk()).andReturn();
+		MvcResult result = mockMvc
+				.perform(put("/library/books/1").contentType(MediaType.APPLICATION_JSON)
+						.content(mapper.writeValueAsString(book)).accept(MediaType.APPLICATION_JSON))
+				.andExpect(status().isOk()).andReturn();
 		String response = result.getResponse().getContentAsString();
 		assertEquals("", response);
 	}

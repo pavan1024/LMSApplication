@@ -46,8 +46,9 @@ public class LibraryBookController {
 		String url = booksUrl.concat("/" + id);
 		return template.exchange(url, HttpMethod.DELETE, null, String.class);
 	}
+
 	@PutMapping("/{id}")
-	public ResponseEntity<String> updateBook(@PathVariable int id,@RequestBody BookDto bookDto) {
+	public ResponseEntity<String> updateBook(@PathVariable int id, @RequestBody BookDto bookDto) {
 		String url = booksUrl.concat("/" + id);
 		HttpEntity<BookDto> book = new HttpEntity<>(bookDto);
 		return template.exchange(url, HttpMethod.PUT, book, String.class);
