@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -20,23 +21,23 @@ public class RestExceptionHandler {
 	String status = "status";
 
 	@ExceptionHandler(value = DetailsAlreadyExistsException.class)
-	public Map<String, String> handleDetailsAlreadyExistsException(DetailsAlreadyExistsException ex) {
+	public ResponseEntity<Map<String, String>> handleDetailsAlreadyExistsException(DetailsAlreadyExistsException ex) {
 		Map<String, String> response = new HashMap<>();
 		response.put(libraryService, library);
 		response.put(timestamp, new Date().toString());
 		response.put(error, ex.getMessage());
-		response.put(status, HttpStatus.NOT_FOUND.name());
-		return response;
+		response.put(status, HttpStatus.CONFLICT.name());
+		return new ResponseEntity<>(response,HttpStatus.CONFLICT);
 	}
 
 	@ExceptionHandler(value = DetailsNotFoundException.class)
-	public Map<String, String> handleDetailsNotFoundException(DetailsNotFoundException ex) {
+	public ResponseEntity<Map<String, String>> handleDetailsNotFoundException(DetailsNotFoundException ex) {
 		Map<String, String> response = new HashMap<>();
 		response.put(libraryService, library);
 		response.put(timestamp, new Date().toString());
 		response.put(error, ex.getMessage());
 		response.put(status, HttpStatus.NOT_FOUND.name());
-		return response;
+		return new ResponseEntity<>(response,HttpStatus.NOT_FOUND);
 	}
 
 }

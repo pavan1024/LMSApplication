@@ -62,7 +62,7 @@ class RestExceptionHandlerTest {
 	void handlerDetailsNotFoundExceptionTest() throws Exception {
 		when(libraryService.deleteLibraryDetails("username", 11))
 				.thenThrow(new DetailsNotFoundException("Book Not Found"));
-		MvcResult result = mockMvc.perform(delete("/library/users/username/books/11")).andExpect(status().isOk())
+		MvcResult result = mockMvc.perform(delete("/library/users/username/books/11")).andExpect(status().isNotFound())
 				.andReturn();
 		String response = result.getResponse().getContentAsString();
 		HashMap<String, String> data = this.mapFromJson(response, HashMap.class);
@@ -72,7 +72,7 @@ class RestExceptionHandlerTest {
 	@Test
 	void handlerDetailsAlreadyExistsExceptionTest() throws Exception {
 		when(libraryService.addLibraryDetails(any())).thenThrow(new DetailsAlreadyExistsException("Book Not Found"));
-		MvcResult result = mockMvc.perform(post("/library/users/username/books/11")).andExpect(status().isOk())
+		MvcResult result = mockMvc.perform(post("/library/users/username/books/11")).andExpect(status().isConflict())
 				.andReturn();
 		String response = result.getResponse().getContentAsString();
 		HashMap<String, String> data = this.mapFromJson(response, HashMap.class);
