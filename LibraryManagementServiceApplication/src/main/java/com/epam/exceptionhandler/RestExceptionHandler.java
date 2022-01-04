@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import com.epam.exception.DetailsAlreadyExistsException;
 import com.epam.exception.DetailsNotFoundException;
 
+import feign.FeignException;
+
 @RestControllerAdvice
 public class RestExceptionHandler {
 	String libraryService = "libraryService";
@@ -38,6 +40,16 @@ public class RestExceptionHandler {
 		response.put(error, ex.getMessage());
 		response.put(status, HttpStatus.NOT_FOUND.name());
 		return new ResponseEntity<>(response,HttpStatus.NOT_FOUND);
+	}
+	
+	@ExceptionHandler(value = FeignException.class)
+	public ResponseEntity<Map<String, String>> handleFeignException(FeignException ex) {
+		Map<String, String> response = new HashMap<>();
+		response.put(libraryService, library);
+		response.put(timestamp, new Date().toString());
+		response.put(error, ex.getMessage());
+		response.put(status, String.valueOf(ex.status()));
+		return new ResponseEntity<>(response,HttpStatus.valueOf(ex.status()));
 	}
 
 }

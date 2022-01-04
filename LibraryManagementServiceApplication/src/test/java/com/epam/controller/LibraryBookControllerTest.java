@@ -16,8 +16,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
-import org.springframework.web.client.RestTemplate;
-
+import com.epam.client.LibraryBookClient;
 import com.epam.dto.BookDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -25,7 +24,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 class LibraryBookControllerTest {
 
 	@MockBean
-	private RestTemplate restTemplate;
+	LibraryBookClient libraryBookClient;
 
 	@InjectMocks
 	LibraryBookController libraryBookController;
