@@ -32,17 +32,17 @@ class LibraryServiceTest {
 
 	@Mock
 	ModelMapper mapper;
-
-	@Autowired
+	
 	LibraryDto libraryDto;
-
 	Library library;
 
 	@BeforeEach
 	void setUp() {
 		library = new Library();
+		libraryDto = new LibraryDto();
 		libraryDto.setUsername("username");
 		libraryDto.setBookId(12);
+		
 	}
 
 	@Test

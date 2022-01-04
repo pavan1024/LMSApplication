@@ -21,12 +21,10 @@ public class LibraryController {
 	@Autowired
 	LibraryService libraryService;
 
-	@Autowired
-	LibraryDto libraryDto;
-
 	@PostMapping("/users/{username}/books/{bookId}")
 	public ResponseEntity<LibraryDto> addLibraryDetails(@PathVariable String username, @PathVariable int bookId)
 			throws DetailsAlreadyExistsException {
+		LibraryDto libraryDto = new LibraryDto();
 		libraryDto.setUsername(username);
 		libraryDto.setBookId(bookId);
 		return new ResponseEntity<>(libraryService.addLibraryDetails(libraryDto), HttpStatus.CREATED);
