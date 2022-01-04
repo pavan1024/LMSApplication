@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.client.HttpClientErrorException;
 
 import com.epam.exception.DetailsAlreadyExistsException;
 import com.epam.exception.DetailsNotFoundException;
@@ -39,5 +40,16 @@ public class RestExceptionHandler {
 		response.put(status, HttpStatus.NOT_FOUND.name());
 		return new ResponseEntity<>(response,HttpStatus.NOT_FOUND);
 	}
+	
+	@ExceptionHandler(value = HttpClientErrorException.class)
+	public ResponseEntity<Map<String, String>> handleException(HttpClientErrorException ex) {
+		Map<String, String> response = new HashMap<>();
+		response.put(libraryService, library);
+		response.put(timestamp, new Date().toString());
+		response.put(error, ex.getMessage());
+		response.put(status, String.valueOf(HttpStatus.CONFLICT));
+		return new ResponseEntity<>(response,HttpStatus.CONFLICT);
+	}
+	
 
 }
