@@ -47,8 +47,8 @@ public class RestExceptionHandler {
 		response.put(libraryService, library);
 		response.put(timestamp, new Date().toString());
 		response.put(error, ex.getMessage());
-		response.put(status, String.valueOf(HttpStatus.CONFLICT));
-		return new ResponseEntity<>(response,HttpStatus.CONFLICT);
+		response.put(status, String.valueOf(HttpStatus.NOT_FOUND));
+		return new ResponseEntity<>(response,HttpStatus.NOT_FOUND);
 	}
 	
 
