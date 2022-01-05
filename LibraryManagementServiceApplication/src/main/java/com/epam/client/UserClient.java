@@ -10,21 +10,21 @@ import org.springframework.web.bind.annotation.PutMapping;
 
 import com.epam.dto.UserDto;
 
-@FeignClient(name = "libraryuser", url = "http://localhost:9002/users")
-public interface LibraryUserClient {
+@FeignClient(name = "users")
+public interface UserClient {
 	
-	@GetMapping
+	@GetMapping("/users")
 	public ResponseEntity<String> getAllUsers();
 
-	@GetMapping("/{username}")
+	@GetMapping("/users/{username}")
 	public ResponseEntity<String> getUser(@PathVariable String username);
 
-	@PostMapping
+	@PostMapping("/users")
 	public ResponseEntity<String> addUser(UserDto userDto);
 
-	@DeleteMapping("/{username}")
+	@DeleteMapping("/users/{username}")
 	public ResponseEntity<String> deleteUser(@PathVariable String username);
 
-	@PutMapping("/{username}")
+	@PutMapping("/users/{username}")
 	public ResponseEntity<String> updateUser(@PathVariable String username, UserDto userDto);
 }

@@ -10,22 +10,22 @@ import org.springframework.web.bind.annotation.PutMapping;
 
 import com.epam.dto.BookDto;
 
-@FeignClient(name = "librarybook", url = "http://localhost:9001/books")
-public interface LibraryBookClient {
+@FeignClient(name = "books" )
+public interface BookClient {
 
-	@GetMapping
+	@GetMapping("/books")
 	public ResponseEntity<String> getAllBooks();
 
-	@GetMapping("/{id}")
+	@GetMapping("/books/{id}")
 	public ResponseEntity<String> getBook(@PathVariable int id);
 
-	@PostMapping
+	@PostMapping("/books")
 	public ResponseEntity<String> addBook(BookDto bookDto);
 
-	@DeleteMapping("/{id}")
+	@DeleteMapping("/books/{id}")
 	public ResponseEntity<String> deleteBook(@PathVariable int id);
 
-	@PutMapping("/{id}")
+	@PutMapping("/books/{id}")
 	public ResponseEntity<String> updateBook(@PathVariable int id, BookDto bookDto);
 
 }
