@@ -18,7 +18,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.web.client.RestTemplate;
 
-import com.epam.client.LibraryUserClient;
+import com.epam.client.UserClient;
 import com.epam.dto.UserDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -26,7 +26,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 class LibraryUserControllerTest {
 
 	@MockBean
-	private LibraryUserClient libraryUserClient;
+	private UserClient userClient;
 
 	@InjectMocks
 	LibraryUserController libraryUserController;

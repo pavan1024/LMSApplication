@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import com.epam.client.LibraryBookClient;
+import com.epam.client.BookClient;
 import com.epam.dto.BookDto;
 
 @RestController
@@ -18,31 +18,31 @@ import com.epam.dto.BookDto;
 public class LibraryBookController {
 
 	@Autowired
-	LibraryBookClient libraryBookClient;	
+	BookClient bookClient;	
 
 	@GetMapping
 	public ResponseEntity<String> getAllBooks() {
-		return libraryBookClient.getAllBooks();
+		return bookClient.getAllBooks();
 	}
 
 	@GetMapping("/{id}")
 	public ResponseEntity<String> getBook(@PathVariable int id) {
-		return libraryBookClient.getBook(id);
+		return bookClient.getBook(id);
 	}
 
 	@PostMapping
 	public ResponseEntity<String> addBook(@RequestBody BookDto bookDto) {
-		return libraryBookClient.addBook(bookDto);
+		return bookClient.addBook(bookDto);
 	}
 
 	@DeleteMapping("/{id}")
 	public ResponseEntity<String> deleteBook(@PathVariable int id) {
-		return libraryBookClient.deleteBook(id);
+		return bookClient.deleteBook(id);
 	}
 
 	@PutMapping("/{id}")
 	public ResponseEntity<String> updateBook(@PathVariable int id, @RequestBody BookDto bookDto) {
-		return libraryBookClient.updateBook(id, bookDto);
+		return bookClient.updateBook(id, bookDto);
 	}
 
 }
