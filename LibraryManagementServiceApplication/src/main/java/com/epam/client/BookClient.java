@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 
 import com.epam.dto.BookDto;
 
-@FeignClient(name = "books" )
+@FeignClient(name = "book-service" )
 public interface BookClient {
 
 	@GetMapping("/books")
