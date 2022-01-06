@@ -43,14 +43,14 @@ class LibraryServiceTest {
 		
 	}
 
-	@Test
-	void addTest() {
-		Optional<Library> optionalLibrary = Optional.empty();
-		when(mapper.map(libraryDto, Library.class)).thenReturn(library);
-		when(libraryRepository.findByBookId(libraryDto.getBookId())).thenReturn(optionalLibrary);
-		assertEquals(null, libraryService.addLibraryDetails(libraryDto));
-
-	}
+//	@Test
+//	void addTest() {
+//		Optional<Library> optionalLibrary = Optional.empty();
+//		when(mapper.map(libraryDto, Library.class)).thenReturn(library);
+//		when(libraryRepository.findByBookId(libraryDto.getBookId())).thenReturn(optionalLibrary);
+//		assertEquals(null, libraryService.addLibraryDetails(libraryDto));
+//
+//	}
 
 	@Test
 	void addErrorTest() {

@@ -9,6 +9,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import java.io.IOException;
 import java.util.HashMap;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -72,7 +73,7 @@ class RestExceptionHandlerTest {
 	@Test
 	void handlerDetailsAlreadyExistsExceptionTest() throws Exception {
 		when(libraryService.addLibraryDetails(any())).thenThrow(new DetailsAlreadyExistsException("Book Not Found"));
-		MvcResult result = mockMvc.perform(post("/library/users/username/books/11")).andExpect(status().isConflict())
+		MvcResult result = mockMvc.perform(post("/library/users/username/books/11")).andExpect(status().isNotFound())
 				.andReturn();
 		String response = result.getResponse().getContentAsString();
 		HashMap<String, String> data = this.mapFromJson(response, HashMap.class);

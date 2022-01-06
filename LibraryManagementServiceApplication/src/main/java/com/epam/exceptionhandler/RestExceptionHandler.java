@@ -28,8 +28,8 @@ public class RestExceptionHandler {
 		response.put(libraryService, library);
 		response.put(timestamp, new Date().toString());
 		response.put(error, ex.getMessage());
-		response.put(status, HttpStatus.CONFLICT.name());
-		return new ResponseEntity<>(response,HttpStatus.CONFLICT);
+		response.put(status, HttpStatus.NOT_FOUND.name());
+		return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
 	}
 
 	@ExceptionHandler(value = DetailsNotFoundException.class)
@@ -39,9 +39,9 @@ public class RestExceptionHandler {
 		response.put(timestamp, new Date().toString());
 		response.put(error, ex.getMessage());
 		response.put(status, HttpStatus.NOT_FOUND.name());
-		return new ResponseEntity<>(response,HttpStatus.NOT_FOUND);
+		return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
 	}
-	
+
 	@ExceptionHandler(value = FeignException.class)
 	public ResponseEntity<Map<String, String>> handleFeignException(FeignException ex) {
 		Map<String, String> response = new HashMap<>();
@@ -49,7 +49,7 @@ public class RestExceptionHandler {
 		response.put(timestamp, new Date().toString());
 		response.put(error, ex.getMessage());
 		response.put(status, String.valueOf(ex.status()));
-		return new ResponseEntity<>(response,HttpStatus.valueOf(ex.status()));
+		return new ResponseEntity<>(response, HttpStatus.valueOf(ex.status()));
 	}
 
 }

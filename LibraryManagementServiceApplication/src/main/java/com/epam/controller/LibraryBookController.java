@@ -18,7 +18,7 @@ import com.epam.dto.BookDto;
 public class LibraryBookController {
 
 	@Autowired
-	BookClient bookClient;	
+	BookClient bookClient;
 
 	@GetMapping
 	public ResponseEntity<String> getAllBooks() {

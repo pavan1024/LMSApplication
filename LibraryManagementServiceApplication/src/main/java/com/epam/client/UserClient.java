@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 
 import com.epam.dto.UserDto;
 
-@FeignClient(name = "user-service")
+@FeignClient(name = "users")
 public interface UserClient {
-	
+
 	@GetMapping("/users")
 	public ResponseEntity<String> getAllUsers();
 
