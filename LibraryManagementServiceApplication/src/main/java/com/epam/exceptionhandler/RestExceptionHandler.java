@@ -9,8 +9,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import com.epam.exception.DetailsAlreadyExistsException;
-import com.epam.exception.DetailsNotFoundException;
+import com.epam.exception.BookAlreadyIssuedException;
+import com.epam.exception.BookDetailsNotFoundException;
 
 import feign.FeignException;
 
@@ -22,8 +22,8 @@ public class RestExceptionHandler {
 	String error = "error";
 	String status = "status";
 
-	@ExceptionHandler(value = DetailsAlreadyExistsException.class)
-	public ResponseEntity<Map<String, String>> handleDetailsAlreadyExistsException(DetailsAlreadyExistsException ex) {
+	@ExceptionHandler(value = BookAlreadyIssuedException.class)
+	public ResponseEntity<Map<String, String>> handleDetailsAlreadyExistsException(BookAlreadyIssuedException ex) {
 		Map<String, String> response = new HashMap<>();
 		response.put(libraryService, library);
 		response.put(timestamp, new Date().toString());
@@ -32,8 +32,8 @@ public class RestExceptionHandler {
 		return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
 	}
 
-	@ExceptionHandler(value = DetailsNotFoundException.class)
-	public ResponseEntity<Map<String, String>> handleDetailsNotFoundException(DetailsNotFoundException ex) {
+	@ExceptionHandler(value = BookDetailsNotFoundException.class)
+	public ResponseEntity<Map<String, String>> handleDetailsNotFoundException(BookDetailsNotFoundException ex) {
 		Map<String, String> response = new HashMap<>();
 		response.put(libraryService, library);
 		response.put(timestamp, new Date().toString());

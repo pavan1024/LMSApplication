@@ -20,8 +20,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
 import com.epam.entity.Library;
-import com.epam.exception.DetailsAlreadyExistsException;
-import com.epam.exception.DetailsNotFoundException;
+import com.epam.exception.BookAlreadyIssuedException;
+import com.epam.exception.BookDetailsNotFoundException;
 import com.epam.repo.LibraryRepository;
 import com.epam.service.LibraryService;
 import com.fasterxml.jackson.core.JsonParseException;
@@ -62,7 +62,7 @@ class RestExceptionHandlerTest {
 	@Test
 	void handlerDetailsNotFoundExceptionTest() throws Exception {
 		when(libraryService.deleteLibraryDetails("username", 11))
-				.thenThrow(new DetailsNotFoundException("Book Not Found"));
+				.thenThrow(new BookDetailsNotFoundException("Book Not Found"));
 		MvcResult result = mockMvc.perform(delete("/library/users/username/books/11")).andExpect(status().isNotFound())
 				.andReturn();
 		String response = result.getResponse().getContentAsString();
@@ -72,7 +72,7 @@ class RestExceptionHandlerTest {
 
 	@Test
 	void handlerDetailsAlreadyExistsExceptionTest() throws Exception {
-		when(libraryService.addLibraryDetails(any())).thenThrow(new DetailsAlreadyExistsException("Book Not Found"));
+		when(libraryService.addLibraryDetails(any())).thenThrow(new BookAlreadyIssuedException("Book Not Found"));
 		MvcResult result = mockMvc.perform(post("/library/users/username/books/11")).andExpect(status().isNotFound())
 				.andReturn();
 		String response = result.getResponse().getContentAsString();

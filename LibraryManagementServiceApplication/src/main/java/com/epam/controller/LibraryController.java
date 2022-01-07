@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.epam.dto.LibraryDto;
-import com.epam.exception.DetailsAlreadyExistsException;
-import com.epam.exception.DetailsNotFoundException;
+import com.epam.exception.BookAlreadyIssuedException;
+import com.epam.exception.BookDetailsNotFoundException;
 import com.epam.service.LibraryService;
 
 @RestController
@@ -23,7 +23,7 @@ public class LibraryController {
 
 	@PostMapping("/users/{username}/books/{bookId}")
 	public ResponseEntity<LibraryDto> addLibraryDetails(@PathVariable String username, @PathVariable int bookId)
-			throws DetailsAlreadyExistsException {
+			throws BookAlreadyIssuedException {
 		LibraryDto libraryDto = new LibraryDto();
 		libraryDto.setUsername(username);
 		libraryDto.setBookId(bookId);
@@ -32,7 +32,7 @@ public class LibraryController {
 
 	@DeleteMapping("/users/{username}/books/{bookId}")
 	public ResponseEntity<String> deleteLibraryDetails(@PathVariable String username, @PathVariable int bookId)
-			throws DetailsNotFoundException {
+			throws BookDetailsNotFoundException {
 		return new ResponseEntity<>(libraryService.deleteLibraryDetails(username, bookId), HttpStatus.NO_CONTENT);
 	}
 }

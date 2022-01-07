@@ -15,8 +15,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import com.epam.dto.LibraryDto;
 import com.epam.entity.Library;
-import com.epam.exception.DetailsAlreadyExistsException;
-import com.epam.exception.DetailsNotFoundException;
+import com.epam.exception.BookAlreadyIssuedException;
+import com.epam.exception.BookDetailsNotFoundException;
 import com.epam.repo.LibraryRepository;
 
 @SpringBootTest
@@ -30,7 +30,7 @@ class LibraryServiceTest {
 
 	@Mock
 	ModelMapper mapper;
-	
+
 	LibraryDto libraryDto;
 	Library library;
 
@@ -40,25 +40,24 @@ class LibraryServiceTest {
 		libraryDto = new LibraryDto();
 		libraryDto.setUsername("username");
 		libraryDto.setBookId(12);
-		
+
 	}
 
-//	@Test
-//	void addTest() {
-//		Optional<Library> optionalLibrary = Optional.empty();
-//		when(mapper.map(libraryDto, Library.class)).thenReturn(library);
-//		when(libraryRepository.findByBookId(libraryDto.getBookId())).thenReturn(optionalLibrary);
-//		assertEquals(null, libraryService.addLibraryDetails(libraryDto));
-//
-//	}
+	@Test
+	void addTest() {
+		when(mapper.map(libraryDto, Library.class)).thenReturn(library);
+		when(libraryRepository.save(library)).thenReturn(library);
+		when(libraryRepository.existsByBookId(libraryDto.getBookId())).thenReturn(false);
+		assertEquals(libraryDto, libraryService.addLibraryDetails(libraryDto));
+
+	}
 
 	@Test
 	void addErrorTest() {
-		Optional<Library> optionalBook = Optional.ofNullable(library);
-		when(libraryRepository.findByBookId(libraryDto.getBookId())).thenReturn(optionalBook);
-		Throwable exception = assertThrows(DetailsAlreadyExistsException.class,
+		when(libraryRepository.existsByBookId(libraryDto.getBookId())).thenReturn(true);
+		Throwable exception = assertThrows(BookAlreadyIssuedException.class,
 				() -> libraryService.addLibraryDetails(libraryDto));
-		assertEquals("Already Exists", exception.getMessage());
+		assertEquals("Book Already Issued", exception.getMessage());
 
 	}
 
@@ -76,9 +75,9 @@ class LibraryServiceTest {
 		Optional<Library> optionalBook = Optional.empty();
 		when(libraryRepository.findByUsernameAndBookId(libraryDto.getUsername(), libraryDto.getBookId()))
 				.thenReturn(optionalBook);
-		Throwable exception = assertThrows(DetailsNotFoundException.class,
+		Throwable exception = assertThrows(BookDetailsNotFoundException.class,
 				() -> libraryService.deleteLibraryDetails(libraryDto.getUsername(), libraryDto.getBookId()));
-		assertEquals("Details Not Found", exception.getMessage());
+		assertEquals("Book Details Not Found", exception.getMessage());
 	}
 
 }

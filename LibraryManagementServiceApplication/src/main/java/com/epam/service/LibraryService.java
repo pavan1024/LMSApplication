@@ -1,15 +1,13 @@
 package com.epam.service;
 
-import java.util.Optional;
-
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.epam.dto.LibraryDto;
 import com.epam.entity.Library;
-import com.epam.exception.DetailsAlreadyExistsException;
-import com.epam.exception.DetailsNotFoundException;
+import com.epam.exception.BookAlreadyIssuedException;
+import com.epam.exception.BookDetailsNotFoundException;
 import com.epam.repo.LibraryRepository;
 
 @Service
@@ -21,10 +19,9 @@ public class LibraryService {
 	@Autowired
 	ModelMapper mapper;
 
-	public LibraryDto addLibraryDetails(LibraryDto libraryDto) throws DetailsAlreadyExistsException {
-		Optional<Library> retrievedLibrary = libraryRepository.findByBookId(libraryDto.getBookId());
-		if (retrievedLibrary.isPresent()) {
-			throw new DetailsAlreadyExistsException("Already Exists");
+	public LibraryDto addLibraryDetails(LibraryDto libraryDto) throws BookAlreadyIssuedException {
+		if(libraryRepository.existsByBookId(libraryDto.getBookId())) {
+			throw new BookAlreadyIssuedException("Book Already Issued");
 		}
 		Library library = mapper.map(libraryDto, Library.class);
 		library = libraryRepository.save(library);
@@ -32,9 +29,9 @@ public class LibraryService {
 		return libraryDto;
 	}
 
-	public String deleteLibraryDetails(String username, int bookId) throws DetailsNotFoundException {
+	public String deleteLibraryDetails(String username, int bookId) throws BookDetailsNotFoundException {
 		Library library = libraryRepository.findByUsernameAndBookId(username, bookId)
-				.orElseThrow(() -> new DetailsNotFoundException("Details Not Found"));
+				.orElseThrow(() -> new BookDetailsNotFoundException("Book Details Not Found"));
 		libraryRepository.delete(library);
 		return "Deleted Library Details";
 	}

@@ -1,10 +1,10 @@
 package com.epam.exception;
 
-public class DetailsAlreadyExistsException extends RuntimeException {
+public class BookAlreadyIssuedException extends RuntimeException {
 
 	private static final long serialVersionUID = 1L;
 
-	public DetailsAlreadyExistsException(String message) {
+	public BookAlreadyIssuedException(String message) {
 		super(message);
 	}
 

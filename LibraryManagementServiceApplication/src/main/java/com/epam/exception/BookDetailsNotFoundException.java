@@ -1,9 +1,9 @@
 package com.epam.exception;
 
-public class DetailsNotFoundException extends RuntimeException {
+public class BookDetailsNotFoundException extends RuntimeException {
 	private static final long serialVersionUID = 1L;
 
-	public DetailsNotFoundException(String message) {
+	public BookDetailsNotFoundException(String message) {
 		super(message);
 	}
 }
