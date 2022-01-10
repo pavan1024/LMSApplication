@@ -1,5 +1,6 @@
 package com.epam.client;
 
+import org.springframework.cloud.loadbalancer.annotation.LoadBalancerClient;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -10,7 +11,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 
 import com.epam.dto.BookDto;
 
-@FeignClient(name = "books")
+@FeignClient(name = "book-service")
+@LoadBalancerClient(name = "book-service")
 public interface BookClient {
 
 	@GetMapping("/books")
